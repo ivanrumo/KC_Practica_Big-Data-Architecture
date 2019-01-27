@@ -79,6 +79,6 @@ Por último, se elimina el cluster ya que ya se han realizado las tareas necesar
 
 ## Resultado de la práctica
 
-Realmente se obtienen los resultados que se pedían en un principio. Obtenemos los resultados de los usuarios más activos. Seguramente no sea indicativo suficiente para ver si un usuario es un buen profesional, pero es un buen inicio. 
+Realmente se obtienen los resultados que se pedían en un principio. Obtenemos los datos de los usuarios más activos. Seguramente no sea indicativo suficiente para ver si un usuario es un buen profesional, pero es un buen inicio. 
 
 El fichero de las localizaciones más activas está curioso. Siempre está en primera posición la localización "None" que se entiende que es la que devuelve el API cuando un usuario no ha indicado en que localización se encuentra. Por otro lado siempre suelen estar en primeras posiciones Nueva York, Ucrania, Francia y Reino Unido.
