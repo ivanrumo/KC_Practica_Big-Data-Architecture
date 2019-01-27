@@ -18,11 +18,29 @@ El primer fichero generado, lo usaremos como datos de entrada para el proceso Wo
 
 En el siguiente diagrama podemos ver la arquitectura que se va a necesitar para realizar estas tareas:
 
+![Diagrama arquitectura](https://github.com/ivanrumo/KC_Practica_Big-Data-Architecture/raw/master/Diagrama%20arquitectura.png)
 
+Como se ve en el diagrama vamos a usar la nube de Google para alojar el cluster de Hadoop con el que vamos a realizar el procesamiento de los datos. 
+
+Resumiendo, tenemos un notebook que va a atacar el API de Stackexchange para obtener los datos. Se generan los ficheros user_id_answers (los ids de los usuarios que han realizado respuestas) user_ids_names (datos de los usuarios que han realizado respuestas).
+
+Estos ficheros de copian a un bucket de Google Storage. 
+
+Se levanta un cluster de Hadoop con un master y dos slaves. 
+
+Se realiza un Wordcount sobre el fichero user_id_answers.
+
+Se importan el resultado del wordcount y del fichero user_ids_names a Hive y se realizan consultas con ellos. Estas consultas se escriben en tablas externas que se almacenan en el bucket de Google Storage.
+
+Se copian los archivos obtenidos con el cluster al notebook y se muestran los resultados.
+
+Se elimina el Cluster.
+
+Todas estas tareas se realizan desde el Notebook y he intentado que se hagan de la forma más automática posible.
 
 ## Spring 2
 
-Este spring y los siguientes lo he realizado en un [notebook de Google Colaboratory](https://colab.research.google.com/drive/1J3siKvUHW5e8HYg0GSSyqWjHWe0UBu7-). En el notebook se va explicando cuando se realiza cada spring:
+Este spring y los siguientes los he realizado en un [notebook de Google Colaboratory](https://colab.research.google.com/drive/1J3siKvUHW5e8HYg0GSSyqWjHWe0UBu7-). En el notebook se va explicando cuando se realiza cada spring:
 
 * Primero se realizan los imports y se inicializan las variables con los valores adecuados: proyecto de Google cloud, nombre del cluster, zona, región, nombre del bucket de Google storage y nombre del fichero de credenciales de Google Cloud. Al ejecutar esta parte será necesariodar pemisos para que Google cloud pueda acceder a tu cuenta de Google y también solicitará que se proporcione un fichero de credenciales. El nombre del fichero que se suba tendrá que ser el mismo que haya indicado en la variable credentials_file.
 * En el segundo paso se realizan consultas al API de StackExchange para obtener las respuestas que se ha realizado en stackoverflow.com en el último día. Se podrían consultar más días, pero el uso del API está limitado a 300 llamadas cada 6 horas, así que hay riesgo de superar la cuota si se consultan muchos días. Se realizan las consultas a esta url: https://api.stackexchange.com/2.2/answers. Cada petición devuelve 100 resultados y si hay mas resultados hay que volver ha hacer una consulta. De cada respuesta en la página obtenemos el id de usuario que ha realizado la respuesta y lo guardamos en una línea de un fichero que se denomina user_ids_answers. Al final de la ejecución se copia este fichero al Storage de Google que hemos configurado.
