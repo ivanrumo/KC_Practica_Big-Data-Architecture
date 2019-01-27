@@ -30,12 +30,28 @@ Este spring y los siguientes lo he realizado en un [notebook de Google Colaborat
 
 En este spring se crea un cluster en Google dataproc. Este paso se también se realiza [en el mismo notebook](https://colab.research.google.com/drive/1J3siKvUHW5e8HYg0GSSyqWjHWe0UBu7-). Con los datos que se han configurado en el primer paso y [con la ayuda del API que proporciona Google](https://developers.google.com/api-client-library/python/) desplegamos automáticamente un cluster de Hadoop con un master y dos slaves.  Dado que no necesitamos gran potencia de proceso he configurado el cluster con las instancias menos potentes y un espacio en disco de 30GB cada una.
 
-## Spring 4
+## Spring 4​	
 
-Este spring consta de dos pasos:
+En este spring,, en primer lugar, esperamos a que se termine de desplegar el cluster en Google Dataproc. Una vez que se ha desplegado el cluster, le manda ejecutar un trabajo Hadoop:
 
-1. El primer paso espera a que se termine de desplegar el cluster en Google Dataproc. Una vez que se ha desplegado el cluster, le manda ejecutar un trabajo Hadoop. Este trabajo ejecuta el jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar y se le indica que como parámetro realice un WordCount. Como ruta del fichero de entrada se indica el fichero user_ids_answers que hemos copiado al bucket de Google Storage. Como ruta de salida se indica la carpeta "output". Como no hemos nada mas como carpeta de salida, se generá en el HDFS del cluster. Una vezado el trabajo, se espera a que termine de ejecutarse.
-2. En el segundo paso 
+1. Este trabajo ejecuta el jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar
+2. Se le indica que como parámetro realice un WordCount. 
+3. Como ruta del fichero de entrada se indica el fichero user_ids_answers que hemos copiado al bucket de Google Storage. 
+4. Como ruta de salida se indica la carpeta "output" que se generá en el HDFS del cluster. 
+5. Una vez lanzado el trabajo, se espera a que termine de ejecutarse.
+
+## Spring 5
+
+En este spring lanzamos una trabajo en Hive que realiza las siguientes acciones:
+
+1. Creamos la tabla user_answers con el contenido del fichero generado en hdfs por el trabajo de WordCount
+2. Creamos la tabla users con el contenido del fichero que tiene el id del usuario, nombre, reputación y localización.
+3. Creamos la tabla externa users_most_actives que generará un archivo en el bucket de Storage con los usuarios más activos.
+4. Cargamos la tabla users_most_actives con una consulta en la que obtenemos los usuarios, con su id, su nombre y el número de respuestas que han realizado.
+5. Creamos la tabla externa locations_most_actives que generará un archivo en el bucket de Storage con las localizaciones con los usuarios más activos.
+6. Cargamos la tabla locations_most_actives con una consulta en la que obtenemos las localizaciones y el número de respuestas que han realizado los usuarios de cada localización. 
+
+Por último consultamos los resultados que han generado las consultas realizada en Hive. Para ello utilizamos el comando gsutil para copiar los ficheros del Bucket de Storage a Google Drive y los visualizamos con el comando cat.
 
 
 
