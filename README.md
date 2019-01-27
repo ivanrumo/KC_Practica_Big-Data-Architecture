@@ -20,6 +20,8 @@ En el siguiente diagrama podemos ver la arquitectura que se va a necesitar para 
 
 ![Diagrama arquitectura](https://github.com/ivanrumo/KC_Practica_Big-Data-Architecture/raw/master/Diagrama%20arquitectura.png)
 
+[Enlace al diagrama en Google Draw](https://docs.google.com/drawings/d/1cm28cfaWXJDrTRvun76SWXGr-26tAUuD5NAaa2fq6N4/edit?usp=sharing)
+
 Como se ve en el diagrama vamos a usar la nube de Google para alojar el cluster de Hadoop con el que vamos a realizar el procesamiento de los datos. 
 
 Resumiendo, tenemos un notebook que va a atacar el API de Stackexchange para obtener los datos. Se generan los ficheros user_id_answers (los ids de los usuarios que han realizado respuestas) user_ids_names (datos de los usuarios que han realizado respuestas).
@@ -75,6 +77,8 @@ Por último consultamos los resultados que han generado las consultas realizada 
 
 Por último, se elimina el cluster ya que ya se han realizado las tareas necesarias y por lo tanto no necesitamos incurrir en más gastos.
 
+## Resultado de la práctica
 
+Realmente se obtienen los resultados que se pedían en un principio. Obtenemos los resultados de los usuarios más activos. Seguramente no sea indicativo suficiente para ver si un usuario es un buen profesional, pero es un buen inicio. 
 
- 
+El fichero de las localizaciones más activas está curioso. Siempre está en primera posición la localización "None" que se entiende que es la que devuelve el API cuando un usuario no ha indicado en que localización se encuentra. Por otro lado siempre suelen estar en primeras posiciones Nueva York, Ucrania, Francia y Reino Unido.
